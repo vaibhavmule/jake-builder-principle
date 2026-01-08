@@ -100,27 +100,14 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
           </div>
         </div>
 
-        {/* Progress counter and attribution */}
-        <div className="text-center mt-6 space-y-2">
+        {/* Progress counter */}
+        <div className="text-center mt-6">
           <p
             className="text-xs text-[var(--fid-color)] tracking-wider"
             style={{ letterSpacing: '1px' }}
           >
             {currentIndex} / {total}
           </p>
-          <a
-            href="https://farcaster.xyz/jake/0x23e58327"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block text-xs text-[var(--fid-color)] hover:text-white transition-colors duration-300"
-            style={{
-              letterSpacing: '0.5px',
-              fontFamily: "'Playfair Display', serif",
-              fontStyle: 'italic'
-            }}
-          >
-            Builder Principles (@Jake)
-          </a>
         </div>
 
         {/* Hidden ShareButton for functionality */}

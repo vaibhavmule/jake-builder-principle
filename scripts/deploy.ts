@@ -715,8 +715,10 @@ async function deployToVercel(useGitHub = false): Promise<void> {
 
     if (vercelClient) {
       try {
-        const projects = await vercelClient.projects.getProjects({});
-        const project = projects.projects.find(
+        const response = await vercelClient.projects.getProjects({});
+        // Handle both old and new Vercel SDK response structures
+        const projectsList = Array.isArray(response) ? response : (response as any).projects || [];
+        const project = projectsList.find(
           (p: any) => p.id === projectId || p.name === projectId,
         );
         if (project) {

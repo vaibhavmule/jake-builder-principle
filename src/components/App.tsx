@@ -93,6 +93,7 @@ export default function App(
   // --- Render ---
   return (
     <div
+      className="h-screen overflow-hidden"
       style={{
         paddingTop: context?.client.safeAreaInsets?.top ?? 0,
         paddingBottom: context?.client.safeAreaInsets?.bottom ?? 0,
@@ -100,23 +101,15 @@ export default function App(
         paddingRight: context?.client.safeAreaInsets?.right ?? 0,
       }}
     >
-      {/* Header should be full width */}
-      <Header neynarUser={neynarUser} />
+      {/* Header and Footer hidden for fullscreen ultra-minimal experience */}
 
-      {/* Main content and footer should be centered */}
-      <div className="container py-2 pb-20">
-        {/* Main title */}
-        <h1 className="text-2xl font-bold text-center mb-4">{title}</h1>
-
-        {/* Tab content rendering */}
+      {/* Tab content rendering - fullscreen */}
+      <main className="h-full overflow-hidden">
         {currentTab === Tab.Home && <HomeTab />}
         {currentTab === Tab.Actions && <ActionsTab />}
         {currentTab === Tab.Context && <ContextTab />}
         {currentTab === Tab.Wallet && <WalletTab />}
-
-        {/* Footer with navigation */}
-        <Footer activeTab={currentTab as Tab} setActiveTab={setActiveTab} showWallet={USE_WALLET} />
-      </div>
+      </main>
     </div>
   );
 }

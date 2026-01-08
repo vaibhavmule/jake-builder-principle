@@ -16,64 +16,110 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
   const shareUrl = `${APP_URL}/share/${principle.id}`;
 
   return (
-    <div className="relative h-full w-full bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900 flex flex-col justify-between p-8 md:p-12 overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2"></div>
-      </div>
+    <div className="flex items-center justify-center h-full w-full p-4">
+      {/* Glassmorphic Card */}
+      <div
+        className="relative w-full max-w-sm h-[80vh] max-h-[700px] flex flex-col justify-between p-10 rounded-[30px]"
+        style={{
+          background: 'var(--glass-bg)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid var(--glass-border)',
+          boxShadow: '0 50px 100px -20px rgba(0,0,0,1)'
+        }}
+      >
+        {/* Header - Principle number and FID style */}
+        <div className="flex items-start justify-between">
+          <div>
+            <p
+              className="text-sm tracking-wider uppercase font-mono text-[var(--fid-color)]"
+              style={{ letterSpacing: '1.5px' }}
+            >
+              PRINCIPLE
+            </p>
+          </div>
+          <div>
+            <p
+              className="text-sm tracking-wider uppercase font-mono text-[var(--fid-color)]"
+              style={{ letterSpacing: '1.5px' }}
+            >
+              #{principle.id}
+            </p>
+          </div>
+        </div>
 
-      {/* Floating share button - top right */}
-      <div className="absolute top-6 right-6 z-10">
-        <div className="group w-12 h-12 rounded-full bg-white/90 dark:bg-gray-800/90 shadow-xl flex items-center justify-center hover:scale-110 transition-all duration-300 backdrop-blur-md border border-purple-100 dark:border-purple-800 [&>button]:w-full [&>button]:h-full [&>button]:rounded-full [&>button]:bg-transparent [&>button]:hover:bg-transparent [&>button]:flex [&>button]:items-center [&>button]:justify-center [&>button]:p-0 [&>button]:min-w-0">
+        {/* Center - Main principle text */}
+        <div className="flex-1 flex items-center justify-center px-4 py-8">
+          <p
+            className="text-center text-white leading-relaxed"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: '1.5rem',
+              fontWeight: 600,
+              textShadow: '0 0 5px rgba(255,255,255,0.1)'
+            }}
+          >
+            {principle.text}
+          </p>
+        </div>
+
+        {/* Footer - Share button with glow */}
+        <div className="flex justify-center gap-8">
+          <div className="relative [&>button]:!bg-transparent [&>button]:!border-none [&>button]:!shadow-none [&>button]:!p-0 [&>button]:!min-w-0">
+            <ShareButton
+              buttonText=""
+              cast={{
+                text: `"${principle.text}"\n\n#${principle.id} of 44 Builder Principles\n\nView all at:`,
+                embeds: [shareUrl],
+              }}
+              className="!bg-transparent"
+            />
+            <button
+              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '1.8rem',
+                fontStyle: 'italic',
+                textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)',
+                letterSpacing: '0px'
+              }}
+              onClick={() => {
+                const shareBtn = document.querySelector('[data-principle-share]') as HTMLButtonElement;
+                shareBtn?.click();
+              }}
+            >
+              <Share2 className="w-6 h-6 transition-transform group-hover:rotate-12" />
+              <span
+                className="group-hover:tracking-wide transition-all"
+                style={{
+                  textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)'
+                }}
+              >
+                share
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* Progress counter */}
+        <div className="text-center mt-6">
+          <p
+            className="text-xs text-[var(--fid-color)] tracking-wider"
+            style={{ letterSpacing: '1px' }}
+          >
+            {currentIndex} / {total}
+          </p>
+        </div>
+
+        {/* Hidden ShareButton for functionality */}
+        <div className="hidden">
           <ShareButton
             buttonText=""
             cast={{
               text: `"${principle.text}"\n\n#${principle.id} of 44 Builder Principles\n\nView all at:`,
               embeds: [shareUrl],
             }}
-            className="!bg-transparent !hover:bg-transparent !shadow-none !border-none !p-0"
+            className="!bg-transparent"
           />
-          <Share2 className="w-5 h-5 text-purple-600 dark:text-purple-400 absolute pointer-events-none group-hover:rotate-12 transition-transform duration-300" />
-        </div>
-      </div>
-
-      {/* Principle number badge */}
-      <div className="absolute top-6 left-6 z-10">
-        <div className="px-4 py-2 rounded-full bg-purple-100 dark:bg-purple-900/50 backdrop-blur-sm border border-purple-200 dark:border-purple-700">
-          <span className="text-sm font-medium text-purple-700 dark:text-purple-300">
-            #{principle.id}
-          </span>
-        </div>
-      </div>
-
-      {/* Centered principle text */}
-      <div className="relative flex-1 flex items-center justify-center px-6 py-16">
-        <div className="max-w-3xl">
-          <p className="text-2xl md:text-3xl lg:text-4xl text-center leading-relaxed font-medium text-gray-800 dark:text-gray-100 drop-shadow-sm">
-            {principle.text}
-          </p>
-        </div>
-      </div>
-
-      {/* Progress at bottom */}
-      <div className="relative text-center pb-2">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-          <div className="flex gap-1">
-            {Array.from({ length: Math.min(total, 10) }).map((_, i) => (
-              <div
-                key={i}
-                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                  i < Math.floor((currentIndex / total) * 10)
-                    ? 'bg-purple-500 dark:bg-purple-400'
-                    : 'bg-gray-300 dark:bg-gray-600'
-                }`}
-              />
-            ))}
-          </div>
-          <span className="text-xs font-medium text-gray-600 dark:text-gray-400">
-            {currentIndex} / {total}
-          </span>
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
           boxShadow: '0 50px 100px -20px rgba(0,0,0,1)'
         }}
       >
-        {/* Header - Principle number and FID style */}
+        {/* Header - Principle number on left, progress on right */}
         <div className="flex items-start justify-between">
           <div>
             <p
@@ -37,12 +37,18 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
               PRINCIPLE
             </p>
           </div>
-          <div>
+          <div className="text-right space-y-1">
             <p
               className="text-sm tracking-wider uppercase font-mono text-[var(--fid-color)]"
               style={{ letterSpacing: '1.5px' }}
             >
               #{principle.id}
+            </p>
+            <p
+              className="text-xs text-[var(--fid-color)] tracking-wider"
+              style={{ letterSpacing: '1px' }}
+            >
+              {currentIndex} / {total}
             </p>
           </div>
         </div>
@@ -98,16 +104,6 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
               </span>
             </button>
           </div>
-        </div>
-
-        {/* Progress counter */}
-        <div className="text-center mt-6">
-          <p
-            className="text-xs text-[var(--fid-color)] tracking-wider"
-            style={{ letterSpacing: '1px' }}
-          >
-            {currentIndex} / {total}
-          </p>
         </div>
 
         {/* Hidden ShareButton for functionality */}

@@ -2,11 +2,7 @@
 
 import { useEffect } from "react";
 import { useMiniApp } from "@neynar/react";
-import { Header } from "~/components/ui/Header";
-import { Footer } from "~/components/ui/Footer";
 import { HomeTab, ActionsTab, ContextTab, WalletTab } from "~/components/ui/tabs";
-import { USE_WALLET } from "~/lib/constants";
-import { useNeynarUser } from "../hooks/useNeynarUser";
 
 // --- Types ---
 export enum Tab {
@@ -49,20 +45,14 @@ export interface AppProps {
  * <App title="My Mini App" />
  * ```
  */
-export default function App(
-  { title }: AppProps = { title: "Neynar Starter Kit" }
-) {
+export default function App() {
   // --- Hooks ---
   const {
     isSDKLoaded,
     context,
     setInitialTab,
-    setActiveTab,
     currentTab,
   } = useMiniApp();
-
-  // --- Neynar user hook ---
-  const { user: neynarUser } = useNeynarUser(context || undefined);
 
   // --- Effects ---
   /**

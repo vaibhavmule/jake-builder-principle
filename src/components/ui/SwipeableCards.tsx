@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useMiniApp } from '@neynar/react';
 import { principles } from '~/lib/principles';
 import { PrincipleCard } from './PrincipleCard';
 
@@ -29,9 +28,6 @@ export function SwipeableCards() {
   const touchStartTime = useRef(0);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const { context, actions } = useMiniApp();
-  const haptics = actions?.haptics;
-
   // Handle URL parameter changes
   useEffect(() => {
     if (principleParam) {
@@ -40,33 +36,12 @@ export function SwipeableCards() {
     }
   }, [principleParam]);
 
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (isAnimating) return;
-
-      if (e.key === 'ArrowLeft') {
-        handleNavigate('prev');
-      } else if (e.key === 'ArrowRight') {
-        handleNavigate('next');
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, isAnimating]);
-
-  const handleNavigate = (direction: 'next' | 'prev') => {
+  const handleNavigate = useCallback((direction: 'next' | 'prev') => {
     if (isAnimating) return;
 
     if (direction === 'next' && currentIndex < principles.length - 1) {
       setIsAnimating(true);
       setSwipeDirection('left');
-
-      // Haptic feedback
-      if (haptics?.impactOccurred) {
-        haptics.impactOccurred('light');
-      }
 
       setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
@@ -77,25 +52,34 @@ export function SwipeableCards() {
       setIsAnimating(true);
       setSwipeDirection('right');
 
-      // Haptic feedback
-      if (haptics?.impactOccurred) {
-        haptics.impactOccurred('light');
-      }
-
       setTimeout(() => {
         setCurrentIndex(currentIndex - 1);
         setSwipeDirection(null);
         setIsAnimating(false);
       }, 300);
     }
-  };
+  }, [currentIndex, isAnimating]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        handleNavigate('prev');
+      } else if (e.key === 'ArrowRight') {
+        handleNavigate('next');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleNavigate]);
+
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (isAnimating) return;
 
     touchStartX.current = e.touches[0].clientX;
     touchStartTime.current = Date.now();
-    setShowHint(false); // Hide hint on first interaction
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {

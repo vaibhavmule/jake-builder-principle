@@ -27,15 +27,18 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
           boxShadow: '0 50px 100px -20px rgba(0,0,0,1)'
         }}
       >
-        {/* Header - Principle label on left, progress on right */}
+        {/* Header - Attribution link on left, progress on right */}
         <div className="flex items-start justify-between">
           <div>
-            <p
-              className="text-sm tracking-wider uppercase font-mono text-[var(--fid-color)]"
+            <a
+              href="https://farcaster.xyz/jake/0x23e58327"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300"
               style={{ letterSpacing: '1.5px' }}
             >
-              PRINCIPLE
-            </p>
+              Builder Principles (@Jake)
+            </a>
           </div>
           <div className="text-right">
             <p
@@ -63,7 +66,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
         </div>
 
         {/* Footer - Share button with glow */}
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex justify-center">
           <div className="relative [&>button]:!bg-transparent [&>button]:!border-none [&>button]:!shadow-none [&>button]:!p-0 [&>button]:!min-w-0">
             <ShareButton
               buttonText=""
@@ -98,21 +101,6 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
               </span>
             </button>
           </div>
-
-          {/* Attribution to Jake */}
-          <a
-            href="https://farcaster.xyz/jake/0x23e58327"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-[var(--fid-color)] hover:text-white transition-colors duration-300"
-            style={{
-              letterSpacing: '0.5px',
-              fontFamily: "'Playfair Display', serif",
-              fontStyle: 'italic'
-            }}
-          >
-            Builder Principles (@Jake)
-          </a>
         </div>
 
         {/* Hidden ShareButton for functionality */}

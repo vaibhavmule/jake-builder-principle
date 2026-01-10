@@ -3,7 +3,8 @@
 import { BuilderPrinciple } from '~/lib/principles';
 import { ShareButton } from './Share';
 import { APP_URL } from '~/lib/constants';
-import { Share2 } from 'lucide-react';
+import { Share2, Heart } from 'lucide-react';
+import { TipButtonWithModal } from './wallet/TipButtonWithModal';
 
 interface PrincipleCardProps {
   principle: BuilderPrinciple;
@@ -61,8 +62,9 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
           </p>
         </div>
 
-        {/* Footer - Share button with glow */}
-        <div className="flex justify-center">
+        {/* Footer - Share and Tip buttons with glow */}
+        <div className="flex justify-center items-center gap-8">
+          {/* Share button */}
           <div className="relative [&>button]:!bg-transparent [&>button]:!border-none [&>button]:!shadow-none [&>button]:!p-0 [&>button]:!min-w-0">
             <ShareButton
               buttonText=""
@@ -97,9 +99,43 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
               </span>
             </button>
           </div>
+
+          {/* Tip button */}
+          <div className="relative [&>button]:!bg-transparent [&>button]:!border-none [&>button]:!shadow-none [&>button]:!p-0 [&>button]:!min-w-0">
+            <TipButtonWithModal
+              recipientFid={1356870}
+              recipientAddress="0xFFe16898FC0af80ee9BCF29D2B54a0F20F9498ad"
+              buttonText=""
+              className="!bg-transparent"
+            />
+            <button
+              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '1.8rem',
+                fontStyle: 'italic',
+                textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)',
+                letterSpacing: '0px'
+              }}
+              onClick={() => {
+                const tipBtn = document.querySelector('[data-tip]') as HTMLButtonElement;
+                tipBtn?.click();
+              }}
+            >
+              <Heart className="w-6 h-6 transition-transform group-hover:scale-110" />
+              <span
+                className="group-hover:tracking-wide transition-all"
+                style={{
+                  textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)'
+                }}
+              >
+                tip
+              </span>
+            </button>
+          </div>
         </div>
 
-        {/* Hidden ShareButton for functionality */}
+        {/* Hidden buttons for functionality */}
         <div className="hidden">
           <ShareButton
             buttonText=""
@@ -107,6 +143,12 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
               text: `"${principle.text}"\n\n#${principle.id} of 44 Builder Principles\n\nView all at:`,
               embeds: [shareUrl],
             }}
+            className="!bg-transparent"
+          />
+          <TipButtonWithModal
+            recipientFid={1356870}
+            recipientAddress="0xFFe16898FC0af80ee9BCF29D2B54a0F20F9498ad"
+            buttonText=""
             className="!bg-transparent"
           />
         </div>

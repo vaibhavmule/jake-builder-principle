@@ -69,7 +69,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
         </div>
 
         {/* Footer - Share button with glow */}
-        <div className="flex justify-center gap-8">
+        <div className="flex flex-col items-center gap-4">
           <div className="relative [&>button]:!bg-transparent [&>button]:!border-none [&>button]:!shadow-none [&>button]:!p-0 [&>button]:!min-w-0">
             <ShareButton
               buttonText=""
@@ -104,6 +104,21 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
               </span>
             </button>
           </div>
+
+          {/* Attribution to Jake */}
+          <a
+            href="https://farcaster.xyz/jake/0x23e58327"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-[var(--fid-color)] hover:text-white transition-colors duration-300"
+            style={{
+              letterSpacing: '0.5px',
+              fontFamily: "'Playfair Display', serif",
+              fontStyle: 'italic'
+            }}
+          >
+            Builder Principles (@Jake)
+          </a>
         </div>
 
         {/* Hidden ShareButton for functionality */}

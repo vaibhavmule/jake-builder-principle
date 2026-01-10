@@ -28,26 +28,22 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
         }}
       >
         {/* Header - Attribution link on left, progress on right */}
-        <div className="flex items-start justify-between">
-          <div>
-            <a
-              href="https://farcaster.xyz/jake/0x23e58327"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300"
-              style={{ letterSpacing: '1.5px' }}
-            >
-              Builder Principles (@Jake)
-            </a>
-          </div>
-          <div className="text-right">
-            <p
-              className="text-xs text-[var(--fid-color)] tracking-wider"
-              style={{ letterSpacing: '1px' }}
-            >
-              {currentIndex} / {total}
-            </p>
-          </div>
+        <div className="flex items-center justify-between flex-nowrap">
+          <a
+            href="https://farcaster.xyz/jake/0x23e58327"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap"
+            style={{ letterSpacing: '1.5px' }}
+          >
+            Builder Principles (@Jake)
+          </a>
+          <p
+            className="text-xs text-[var(--fid-color)] tracking-wider whitespace-nowrap ml-4"
+            style={{ letterSpacing: '1px' }}
+          >
+            {currentIndex} / {total}
+          </p>
         </div>
 
         {/* Center - Main principle text */}

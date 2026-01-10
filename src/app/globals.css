@@ -88,7 +88,10 @@ body {
   }
   
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-dark focus:ring-primary;
+    @apply text-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all duration-300;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
   }
   
   .btn-secondary {

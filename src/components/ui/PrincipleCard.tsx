@@ -28,12 +28,12 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
         }}
       >
         {/* Header - Title and attribution on left, progress on right */}
-        <div className="flex items-start justify-between w-full gap-2 min-w-0 flex-wrap">
+        <div className="flex items-start justify-between w-full gap-2 min-w-0">
           <a
             href="https://farcaster.xyz/jake/0x23e58327"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-[10px] sm:text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-1 py-1 touch-manipulation min-w-0 flex-shrink flex-wrap"
+            className="flex items-center gap-1.5 text-[10px] sm:text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-1 py-1 touch-manipulation min-w-0 flex-wrap max-w-[calc(100%-4rem)]"
             style={{ letterSpacing: '1.2px' }}
           >
             <span>Principles for Building in Crypto</span>
@@ -44,7 +44,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
             />
             <span className="flex-shrink-0">@Jake</span>
           </a>
-          <span className="text-[10px] sm:text-xs text-[var(--fid-color)] tracking-wider whitespace-nowrap flex-shrink-0 ml-2" style={{ letterSpacing: '1px' }}>
+          <span className="text-[10px] sm:text-xs text-[var(--fid-color)] tracking-wider whitespace-nowrap flex-shrink-0" style={{ letterSpacing: '1px' }}>
             {currentIndex} / {total}
           </span>
         </div>

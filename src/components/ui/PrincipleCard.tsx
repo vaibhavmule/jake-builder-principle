@@ -34,9 +34,14 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
             href="https://farcaster.xyz/jake/0x23e58327"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap"
+            className="flex items-center gap-2 text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap"
             style={{ letterSpacing: '1.5px' }}
           >
+            <img
+              src="https://i.imgur.com/yHXHMV3.jpg"
+              alt="Jake"
+              className="w-6 h-6 rounded-full border border-white/20"
+            />
             Builder Principles (@Jake)
           </a>
           <p

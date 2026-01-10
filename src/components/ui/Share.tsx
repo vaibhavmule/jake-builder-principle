@@ -6,6 +6,7 @@ import { useMiniApp } from '@neynar/react';
 import { type ComposeCast } from "@farcaster/miniapp-sdk";
 import { APP_URL } from '~/lib/constants';
 import { useHaptics } from '~/hooks/useHaptics';
+import { Share2 } from 'lucide-react';
 
 interface EmbedConfig {
   path?: string;
@@ -119,6 +120,38 @@ export function ShareButton({ buttonText, cast, className = '', isLoading = fals
     }
   }, [cast, bestFriends, context?.user?.fid, actions, triggerSelection, triggerNotification]);
 
+  const isSimple = className?.includes('bg-transparent') || className?.includes('flex items-center');
+  
+  if (isSimple) {
+    // Render as simple button for minimal styling
+    return (
+      <button
+        onClick={handleShare}
+        disabled={isLoading || isProcessing || isLoadingBestFriends}
+        className={`${className} ${shareStatus === 'success' ? 'success-animation' : ''} ${shareStatus === 'error' ? 'error-animation' : ''} transition-opacity disabled:opacity-50 disabled:cursor-not-allowed`}
+        aria-label={shareStatus === 'success' ? 'Successfully shared' : shareStatus === 'error' ? 'Share failed, click to try again' : 'Share this content'}
+      >
+        {isLoading || isProcessing ? (
+          <span className="opacity-70">...</span>
+        ) : (
+          <>
+            {shareStatus === 'success' ? (
+              '✓'
+            ) : shareStatus === 'error' ? (
+              '!'
+            ) : (
+              <>
+                <Share2 className="w-5 h-5" />
+                <span>{buttonText}</span>
+              </>
+            )}
+          </>
+        )}
+      </button>
+    );
+  }
+
+  // Default: Use Button component for styled buttons
   return (
     <div className="relative">
       <Button

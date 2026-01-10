@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "../Button";
 import { TipModal } from "./TipModal";
 import { useHaptics } from "~/hooks/useHaptics";
+import { Heart } from "lucide-react";
 
 type TipButtonWithModalProps = {
   recipientFid?: number;
@@ -33,20 +34,36 @@ export function TipButtonWithModal({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { triggerSelection } = useHaptics();
 
+  const isSimple = className?.includes('bg-transparent') || className?.includes('flex items-center');
+  
   return (
     <>
-      <Button
-        onClick={() => {
-          triggerSelection();
-          setIsModalOpen(true);
-        }}
-        variant={variant}
-        size={size}
-        className={className}
-        data-tip
-      >
-        {buttonText}
-      </Button>
+      {isSimple ? (
+        <button
+          onClick={() => {
+            triggerSelection();
+            setIsModalOpen(true);
+          }}
+          className={`${className} transition-opacity disabled:opacity-50 disabled:cursor-not-allowed`}
+          aria-label={buttonText || 'Tip'}
+        >
+          <Heart className="w-5 h-5" />
+          <span>{buttonText}</span>
+        </button>
+      ) : (
+        <Button
+          onClick={() => {
+            triggerSelection();
+            setIsModalOpen(true);
+          }}
+          variant={variant}
+          size={size}
+          className={className}
+          data-tip
+        >
+          {buttonText}
+        </Button>
+      )}
       <TipModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

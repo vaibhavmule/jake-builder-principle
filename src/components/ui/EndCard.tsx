@@ -1,7 +1,6 @@
 'use client';
 
 import { ShareButton } from './Share';
-import { Share2, Heart } from 'lucide-react';
 import { TipButtonWithModal } from './wallet/TipButtonWithModal';
 import { APP_URL } from '~/lib/constants';
 import { useHaptics } from '~/hooks/useHaptics';
@@ -79,105 +78,27 @@ export function EndCard({ onRestart }: EndCardProps) {
               border: '1px solid rgba(255, 255, 255, 0.2)',
               boxShadow: '0 0 20px rgba(255,255,255,0.2)'
             }}
-            onClick={() => triggerSelection()}
             aria-label="View original post by Jake"
           >
             View Original Post →
           </a>
         </div>
 
-        {/* Footer - Share and Tip buttons */}
+        {/* Footer - Simple Share and Tip buttons */}
         <div className="flex justify-center items-center gap-8">
-          {/* Share button */}
-          <div className="relative [&>button]:!bg-transparent [&>button]:!border-none [&>button]:!shadow-none [&>button]:!p-0 [&>button]:!min-w-0">
-            <ShareButton
-              buttonText=""
-              cast={{
-                text: "I just read all 44 Principles for Building in Crypto by @Jake\n\nView them all at:",
-                embeds: [APP_URL],
-              }}
-              className="!bg-transparent"
-            />
-            <button
-              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none active:scale-95 min-h-[44px] min-w-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg px-2"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '1.8rem',
-                fontStyle: 'italic',
-                textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)',
-                letterSpacing: '0px'
-              }}
-              onClick={() => {
-                triggerSelection();
-                const shareBtn = document.querySelector('[data-principle-share]') as HTMLButtonElement;
-                shareBtn?.click();
-              }}
-              aria-label="Share completion"
-            >
-              <Share2 className="w-6 h-6 transition-transform group-hover:rotate-12" />
-              <span
-                className="group-hover:tracking-wide transition-all"
-                style={{
-                  textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)'
-                }}
-              >
-                share
-              </span>
-            </button>
-          </div>
-
-          {/* Tip button */}
-          <div className="relative [&>button]:!bg-transparent [&>button]:!border-none [&>button]:!shadow-none [&>button]:!p-0 [&>button]:!min-w-0">
-            <TipButtonWithModal
-              recipientFid={1356870}
-              recipientAddress="0xFFe16898FC0af80ee9BCF29D2B54a0F20F9498ad"
-              buttonText=""
-              className="!bg-transparent"
-            />
-            <button
-              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none active:scale-95 min-h-[44px] min-w-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg px-2"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '1.8rem',
-                fontStyle: 'italic',
-                textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)',
-                letterSpacing: '0px'
-              }}
-              onClick={() => {
-                triggerSelection();
-                const tipBtn = document.querySelector('[data-tip]') as HTMLButtonElement;
-                tipBtn?.click();
-              }}
-              aria-label="Tip the creator"
-            >
-              <Heart className="w-6 h-6 transition-transform group-hover:scale-110" />
-              <span
-                className="group-hover:tracking-wide transition-all"
-                style={{
-                  textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)'
-                }}
-              >
-                tip
-              </span>
-            </button>
-          </div>
-        </div>
-
-        {/* Hidden buttons for functionality */}
-        <div className="hidden">
           <ShareButton
-            buttonText=""
+            buttonText="share"
             cast={{
               text: "I just read all 44 Principles for Building in Crypto by @Jake\n\nView them all at:",
               embeds: [APP_URL],
             }}
-            className="!bg-transparent"
+            className="flex items-center gap-2 text-white text-base bg-transparent border-none shadow-none hover:opacity-70 active:opacity-50 min-h-[44px] touch-manipulation focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2"
           />
           <TipButtonWithModal
             recipientFid={1356870}
             recipientAddress="0xFFe16898FC0af80ee9BCF29D2B54a0F20F9498ad"
-            buttonText=""
-            className="!bg-transparent"
+            buttonText="tip"
+            className="flex items-center gap-2 text-white text-base bg-transparent border-none shadow-none hover:opacity-70 active:opacity-50 min-h-[44px] touch-manipulation focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2"
           />
         </div>
       </div>

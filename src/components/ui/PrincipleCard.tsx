@@ -3,9 +3,7 @@
 import { BuilderPrinciple } from '~/lib/principles';
 import { ShareButton } from './Share';
 import { APP_URL } from '~/lib/constants';
-import { Share2, Heart } from 'lucide-react';
 import { TipButtonWithModal } from './wallet/TipButtonWithModal';
-import { useHaptics } from '~/hooks/useHaptics';
 
 interface PrincipleCardProps {
   principle: BuilderPrinciple;
@@ -14,7 +12,6 @@ interface PrincipleCardProps {
 }
 
 export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardProps) {
-  const { triggerSelection } = useHaptics();
   // Share link for this specific principle
   const shareUrl = `${APP_URL}/share/${principle.id}`;
 
@@ -38,7 +35,6 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1 min-h-[44px] touch-manipulation"
             style={{ letterSpacing: '1.5px' }}
-            onClick={() => triggerSelection()}
           >
             <span>Principles for Building in Crypto</span>
             <div
@@ -72,98 +68,21 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
           </p>
         </div>
 
-        {/* Footer - Share and Tip buttons with glow */}
+        {/* Footer - Simple Share and Tip buttons */}
         <div className="flex justify-center items-center gap-8">
-          {/* Share button */}
-          <div className="relative [&>button]:!bg-transparent [&>button]:!border-none [&>button]:!shadow-none [&>button]:!p-0 [&>button]:!min-w-0">
-            <ShareButton
-              buttonText=""
-              cast={{
-                text: `"${principle.text}"\n\n#${principle.id} of 44 Principles for Building in Crypto\n\nView all at:`,
-                embeds: [shareUrl],
-              }}
-              className="!bg-transparent"
-            />
-            <button
-              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none active:scale-95 min-h-[44px] min-w-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg px-2"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '1.8rem',
-                fontStyle: 'italic',
-                textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)',
-                letterSpacing: '0px'
-              }}
-              onClick={() => {
-                triggerSelection();
-                const shareBtn = document.querySelector('[data-principle-share]') as HTMLButtonElement;
-                shareBtn?.click();
-              }}
-              aria-label="Share this principle"
-            >
-              <Share2 className="w-6 h-6 transition-transform group-hover:rotate-12" />
-              <span
-                className="group-hover:tracking-wide transition-all"
-                style={{
-                  textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)'
-                }}
-              >
-                share
-              </span>
-            </button>
-          </div>
-
-          {/* Tip button */}
-          <div className="relative [&>button]:!bg-transparent [&>button]:!border-none [&>button]:!shadow-none [&>button]:!p-0 [&>button]:!min-w-0">
-            <TipButtonWithModal
-              recipientFid={1356870}
-              recipientAddress="0xFFe16898FC0af80ee9BCF29D2B54a0F20F9498ad"
-              buttonText=""
-              className="!bg-transparent"
-            />
-            <button
-              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none active:scale-95 min-h-[44px] min-w-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg px-2"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '1.8rem',
-                fontStyle: 'italic',
-                textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)',
-                letterSpacing: '0px'
-              }}
-              onClick={() => {
-                triggerSelection();
-                const tipBtn = document.querySelector('[data-tip]') as HTMLButtonElement;
-                tipBtn?.click();
-              }}
-              aria-label="Tip the creator"
-            >
-              <Heart className="w-6 h-6 transition-transform group-hover:scale-110" />
-              <span
-                className="group-hover:tracking-wide transition-all"
-                style={{
-                  textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)'
-                }}
-              >
-                tip
-              </span>
-            </button>
-          </div>
-        </div>
-
-        {/* Hidden buttons for functionality */}
-        <div className="hidden">
           <ShareButton
-            buttonText=""
+            buttonText="share"
             cast={{
               text: `"${principle.text}"\n\n#${principle.id} of 44 Principles for Building in Crypto\n\nView all at:`,
               embeds: [shareUrl],
             }}
-            className="!bg-transparent"
+            className="flex items-center gap-2 text-white text-base bg-transparent border-none shadow-none hover:opacity-70 active:opacity-50 min-h-[44px] touch-manipulation focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2"
           />
           <TipButtonWithModal
             recipientFid={1356870}
             recipientAddress="0xFFe16898FC0af80ee9BCF29D2B54a0F20F9498ad"
-            buttonText=""
-            className="!bg-transparent"
+            buttonText="tip"
+            className="flex items-center gap-2 text-white text-base bg-transparent border-none shadow-none hover:opacity-70 active:opacity-50 min-h-[44px] touch-manipulation focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2"
           />
         </div>
       </div>

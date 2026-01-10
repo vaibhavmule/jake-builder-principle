@@ -127,13 +127,30 @@ export function SwipeableCards() {
 
   const currentPrinciple = principles[currentIndex];
 
+  const handleTapNavigation = (e: React.MouseEvent) => {
+    if (isAnimating) return;
+
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    const clickX = e.clientX - rect.left;
+    const cardWidth = rect.width;
+
+    // Left 40% goes back, right 40% goes forward, middle 20% does nothing
+    if (clickX < cardWidth * 0.4) {
+      handleNavigate('prev');
+    } else if (clickX > cardWidth * 0.6) {
+      handleNavigate('next');
+    }
+  };
+
   return (
     <div className="h-full flex flex-col">
       {/* Card container - fullscreen */}
       <div className="flex-1 flex items-center justify-center">
         <div
           ref={cardRef}
-          className="w-full h-full transition-transform duration-300 ease-out"
+          className="w-full h-full transition-transform duration-300 ease-out cursor-pointer"
           style={{
             transform: `translateX(${swipeOffset}px) rotate(${swipeOffset * 0.02}deg)`,
             opacity: isAnimating ? 0 : Math.max(0.5, 1 - Math.abs(swipeOffset) / 400),
@@ -141,6 +158,7 @@ export function SwipeableCards() {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onClick={handleTapNavigation}
         >
           <div
             className={`h-full transition-opacity duration-300 ${

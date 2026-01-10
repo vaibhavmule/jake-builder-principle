@@ -7,6 +7,7 @@ import { base } from "wagmi/chains";
 import { encodeFunctionData, parseUnits } from "viem";
 import { Button } from "../Button";
 import { truncateAddress } from "~/lib/truncateAddress";
+import { useHaptics } from "~/hooks/useHaptics";
 
 // USDC contract addresses on different chains
 const USDC_ADDRESSES: Record<number, `0x${string}`> = {
@@ -96,6 +97,7 @@ export function TipUsdc({
   // --- Hooks ---
   const { actions, isSDKLoaded } = useMiniApp();
   const { isConnected, chainId } = useAccount();
+  const { triggerSelection, triggerNotification } = useHaptics();
   const {
     sendTransaction,
     data: usdcTransactionHash,
@@ -162,6 +164,8 @@ export function TipUsdc({
    * 1 USDC to the tip recipient address.
    */
   const sendUsdcTip = useCallback(async () => {
+    triggerSelection(); // Haptic feedback on tip button tap
+    
     // Use native mini app SDK tipping when FID is provided
     if (!usingEvmTip) {
       if (!miniAppReady || !recipientFid || typeof actions?.sendToken !== "function") {
@@ -180,6 +184,7 @@ export function TipUsdc({
 
         if (result.success) {
           setStatus("success");
+          triggerNotification('success'); // Success haptic feedback
           onSuccess?.();
           setTimeout(() => {
             setStatus("idle");
@@ -194,9 +199,11 @@ export function TipUsdc({
 
         setStatus("error");
         setErrorMessage(result.error?.message ?? "Unable to complete tip.");
+        triggerNotification('error'); // Error haptic feedback
       } catch (error) {
         setStatus("error");
         setErrorMessage(getErrorMessage(error));
+        triggerNotification('error'); // Error haptic feedback
       }
       return;
     }
@@ -229,6 +236,7 @@ export function TipUsdc({
         {
           onSuccess: () => {
             setStatus("success");
+            triggerNotification('success'); // Success haptic feedback
             onSuccess?.();
             setTimeout(() => {
               setStatus("idle");
@@ -237,12 +245,14 @@ export function TipUsdc({
           onError: (error) => {
             setStatus("error");
             setErrorMessage(getErrorMessage(error));
+            triggerNotification('error'); // Error haptic feedback
           },
         }
       );
     } catch (error) {
       setStatus("error");
       setErrorMessage(getErrorMessage(error));
+      triggerNotification('error'); // Error haptic feedback
     }
   }, [
     actions,
@@ -256,6 +266,8 @@ export function TipUsdc({
     amountInWei,
     amount,
     onSuccess,
+    triggerSelection,
+    triggerNotification,
   ]);
 
   // --- Render Logic ---

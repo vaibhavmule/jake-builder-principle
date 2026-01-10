@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { TipUsdc } from "./TipUsdc";
+import { useHaptics } from "~/hooks/useHaptics";
 
 type TipModalProps = {
   isOpen: boolean;
@@ -22,6 +23,7 @@ export function TipModal({
   username,
   recipientAddress,
 }: TipModalProps) {
+  const { triggerSelection } = useHaptics();
   const [selectedAmount, setSelectedAmount] = useState<number>(5);
   const [customAmount, setCustomAmount] = useState<string>("");
   const [useCustomAmount, setUseCustomAmount] = useState<boolean>(false);
@@ -40,10 +42,11 @@ export function TipModal({
   }, [selectedAmount, customAmount, useCustomAmount]);
 
   const handleAmountSelect = useCallback((amount: number) => {
+    triggerSelection(); // Haptic feedback on amount selection
     setSelectedAmount(amount);
     setUseCustomAmount(false);
     setCustomAmount("");
-  }, []);
+  }, [triggerSelection]);
 
   const handleCustomAmountChange = useCallback((value: string) => {
     setCustomAmount(value);
@@ -98,8 +101,11 @@ export function TipModal({
       >
         {/* Close button */}
         <button
-          onClick={onClose}
-          className="absolute right-4 top-4 z-10 rounded-full p-1 text-[var(--fid-color)] transition-all hover:text-white"
+          onClick={() => {
+            triggerSelection();
+            onClose();
+          }}
+          className="absolute right-4 top-4 z-10 rounded-full p-1 text-[var(--fid-color)] transition-all hover:text-white active:scale-95 min-h-[44px] min-w-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent"
           aria-label="Close"
         >
           <X className="h-5 w-5" />
@@ -134,13 +140,14 @@ export function TipModal({
                 <button
                   key={amount}
                   onClick={() => handleAmountSelect(amount)}
-                  className="rounded-xl px-4 py-3 text-sm font-medium transition-all"
+                  className="rounded-xl px-4 py-3 text-sm font-medium transition-all active:scale-95 min-h-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent"
                   style={{
                     background: isSelected ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
                     border: isSelected ? '2px solid rgba(255, 255, 255, 0.3)' : '1px solid rgba(255, 255, 255, 0.1)',
                     color: isSelected ? 'white' : 'var(--fid-color)',
                     boxShadow: isSelected ? '0 0 20px rgba(255,255,255,0.3), 0 0 10px rgba(255,255,255,0.2)' : 'none'
                   }}
+                  aria-label={`Tip $${amount} USDC`}
                 >
                   ${amount}
                 </button>
@@ -161,11 +168,12 @@ export function TipModal({
               value={customAmount}
               onChange={(e) => handleCustomAmountChange(e.target.value)}
               onFocus={handleCustomAmountFocus}
-              className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder:text-[var(--fid-color)] focus:outline-none"
+              className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder:text-[var(--fid-color)] focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent min-h-[44px] touch-manipulation"
               style={{
                 background: 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
               }}
+              aria-label="Custom tip amount in USDC"
             />
           </div>
 

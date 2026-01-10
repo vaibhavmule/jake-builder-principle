@@ -72,29 +72,56 @@ export default function App() {
   if (!isSDKLoaded) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <div className="spinner h-8 w-8 mx-auto mb-4"></div>
-          <p>Loading SDK...</p>
+        <div className="text-center space-y-4">
+          <div className="relative">
+            <div className="spinner-primary h-12 w-12 mx-auto mb-4"></div>
+            <div className="absolute inset-0 spinner-primary h-12 w-12 mx-auto opacity-30" style={{ animationDelay: '0.15s' }}></div>
+          </div>
+          <div className="space-y-2">
+            <p className="text-white text-lg font-medium">Loading...</p>
+            <p className="text-[var(--fid-color)] text-sm">Preparing Builder Principles</p>
+          </div>
+          {/* Skeleton card preview */}
+          <div className="mt-8 mx-auto w-full max-w-sm h-[60vh] max-h-[500px] rounded-[30px] skeleton" 
+               style={{
+                 background: 'var(--glass-bg)',
+                 border: '1px solid var(--glass-border)',
+               }}>
+          </div>
         </div>
       </div>
     );
   }
 
   // --- Render ---
+  const safeAreaTop = context?.client.safeAreaInsets?.top ?? 0;
+  const safeAreaBottom = context?.client.safeAreaInsets?.bottom ?? 0;
+  const safeAreaLeft = context?.client.safeAreaInsets?.left ?? 0;
+  const safeAreaRight = context?.client.safeAreaInsets?.right ?? 0;
+
   return (
     <div
       className="h-screen overflow-hidden"
       style={{
-        paddingTop: context?.client.safeAreaInsets?.top ?? 0,
-        paddingBottom: context?.client.safeAreaInsets?.bottom ?? 0,
-        paddingLeft: context?.client.safeAreaInsets?.left ?? 0,
-        paddingRight: context?.client.safeAreaInsets?.right ?? 0,
+        paddingTop: `${safeAreaTop}px`,
+        paddingBottom: `${safeAreaBottom}px`,
+        paddingLeft: `${safeAreaLeft}px`,
+        paddingRight: `${safeAreaRight}px`,
+        // Ensure content is visible on all devices - use dvh for better mobile support
+        minHeight: '100dvh',
       }}
+      role="application"
+      aria-label="Builder Principles mini app"
     >
       {/* Header and Footer hidden for fullscreen ultra-minimal experience */}
 
       {/* Tab content rendering - fullscreen */}
-      <main className="h-full overflow-hidden">
+      <main 
+        className="h-full overflow-hidden"
+        role="main"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         {currentTab === Tab.Home && <HomeTab />}
         {currentTab === Tab.Actions && <ActionsTab />}
         {currentTab === Tab.Context && <ContextTab />}

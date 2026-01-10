@@ -4,12 +4,15 @@ import { ShareButton } from './Share';
 import { Share2, Heart } from 'lucide-react';
 import { TipButtonWithModal } from './wallet/TipButtonWithModal';
 import { APP_URL } from '~/lib/constants';
+import { useHaptics } from '~/hooks/useHaptics';
 
 interface EndCardProps {
   onRestart: () => void;
 }
 
 export function EndCard({ onRestart }: EndCardProps) {
+  const { triggerSelection } = useHaptics();
+
   return (
     <div className="flex items-center justify-center h-full w-full p-4">
       {/* Glassmorphic Card */}
@@ -25,9 +28,13 @@ export function EndCard({ onRestart }: EndCardProps) {
         {/* Header - Back to #1 button */}
         <div className="flex justify-end">
           <button
-            onClick={onRestart}
-            className="text-xs text-[var(--fid-color)] hover:text-white transition-colors duration-300 uppercase tracking-wider font-mono"
+            onClick={() => {
+              triggerSelection();
+              onRestart();
+            }}
+            className="text-xs text-[var(--fid-color)] hover:text-white transition-colors duration-300 uppercase tracking-wider font-mono focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1 min-h-[44px] touch-manipulation active:scale-95"
             style={{ letterSpacing: '1px' }}
+            aria-label="Restart from first principle"
           >
             ← Back to #1
           </button>
@@ -47,23 +54,18 @@ export function EndCard({ onRestart }: EndCardProps) {
             className="text-center text-white leading-relaxed"
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: '2rem',
+              fontSize: 'clamp(1.5rem, 5vw, 2rem)',
               fontWeight: 600,
-              textShadow: '0 0 5px rgba(255,255,255,0.1)'
+              textShadow: '0 0 5px rgba(255,255,255,0.1)',
+              lineHeight: '1.4'
             }}
           >
-            You've read all 44 principles
+            principles for building in crypto
           </h2>
 
           {/* Subheading */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-[var(--fid-color)]">Builder principles by</span>
-            <div
-              className="w-4 h-4 rounded-full border border-white/20"
-              style={{ backgroundColor: '#0000FF' }}
-              aria-label="Jake"
-            />
-            <span className="text-sm text-[var(--fid-color)]">@Jake</span>
+          <div>
+            <span className="text-sm text-[var(--fid-color)]">@jake</span>
           </div>
 
           {/* CTA Button */}
@@ -71,12 +73,14 @@ export function EndCard({ onRestart }: EndCardProps) {
             href="https://farcaster.xyz/jake/0x23e58327"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 rounded-xl text-white text-sm font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+            className="px-6 py-3 rounded-xl text-white text-sm font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] active:scale-95 min-h-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent inline-flex items-center justify-center"
             style={{
               background: 'rgba(255, 255, 255, 0.1)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
               boxShadow: '0 0 20px rgba(255,255,255,0.2)'
             }}
+            onClick={() => triggerSelection()}
+            aria-label="View original post by Jake"
           >
             View Original Post →
           </a>
@@ -95,7 +99,7 @@ export function EndCard({ onRestart }: EndCardProps) {
               className="!bg-transparent"
             />
             <button
-              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none"
+              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none active:scale-95 min-h-[44px] min-w-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg px-2"
               style={{
                 fontFamily: "'Playfair Display', serif",
                 fontSize: '1.8rem',
@@ -104,9 +108,11 @@ export function EndCard({ onRestart }: EndCardProps) {
                 letterSpacing: '0px'
               }}
               onClick={() => {
+                triggerSelection();
                 const shareBtn = document.querySelector('[data-principle-share]') as HTMLButtonElement;
                 shareBtn?.click();
               }}
+              aria-label="Share completion"
             >
               <Share2 className="w-6 h-6 transition-transform group-hover:rotate-12" />
               <span
@@ -129,7 +135,7 @@ export function EndCard({ onRestart }: EndCardProps) {
               className="!bg-transparent"
             />
             <button
-              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none"
+              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none active:scale-95 min-h-[44px] min-w-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg px-2"
               style={{
                 fontFamily: "'Playfair Display', serif",
                 fontSize: '1.8rem',
@@ -138,9 +144,11 @@ export function EndCard({ onRestart }: EndCardProps) {
                 letterSpacing: '0px'
               }}
               onClick={() => {
+                triggerSelection();
                 const tipBtn = document.querySelector('[data-tip]') as HTMLButtonElement;
                 tipBtn?.click();
               }}
+              aria-label="Tip the creator"
             >
               <Heart className="w-6 h-6 transition-transform group-hover:scale-110" />
               <span

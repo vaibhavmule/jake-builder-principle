@@ -5,6 +5,7 @@ import { Button } from './Button';
 import { useMiniApp } from '@neynar/react';
 import { type ComposeCast } from "@farcaster/miniapp-sdk";
 import { APP_URL } from '~/lib/constants';
+import { useHaptics } from '~/hooks/useHaptics';
 
 interface EmbedConfig {
   path?: string;
@@ -28,7 +29,9 @@ export function ShareButton({ buttonText, cast, className = '', isLoading = fals
   const [isProcessing, setIsProcessing] = useState(false);
   const [bestFriends, setBestFriends] = useState<{ fid: number; username: string; }[] | null>(null);
   const [isLoadingBestFriends, setIsLoadingBestFriends] = useState(false);
+  const [shareStatus, setShareStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const { context, actions } = useMiniApp();
+  const { triggerSelection, triggerNotification } = useHaptics();
 
   // Fetch best friends if needed
   useEffect(() => {
@@ -45,6 +48,8 @@ export function ShareButton({ buttonText, cast, className = '', isLoading = fals
   const handleShare = useCallback(async () => {
     try {
       setIsProcessing(true);
+      setShareStatus('idle');
+      triggerSelection(); // Haptic feedback on share button tap
 
       let finalText = cast.text || '';
 
@@ -99,21 +104,38 @@ export function ShareButton({ buttonText, cast, className = '', isLoading = fals
         channelKey: cast.channelKey,
         close: cast.close,
       });
+      
+      // Success feedback
+      setShareStatus('success');
+      triggerNotification('success');
     } catch (error) {
       console.error('Failed to share:', error);
+      setShareStatus('error');
+      triggerNotification('error');
     } finally {
       setIsProcessing(false);
+      // Reset status after animation
+      setTimeout(() => setShareStatus('idle'), 2000);
     }
-  }, [cast, bestFriends, context?.user?.fid, actions]);
+  }, [cast, bestFriends, context?.user?.fid, actions, triggerSelection, triggerNotification]);
 
   return (
-    <Button
-      onClick={handleShare}
-      className={className}
-      isLoading={isLoading || isProcessing}
-      disabled={isLoadingBestFriends}
-    >
-      {buttonText}
-    </Button>
+    <div className="relative">
+      <Button
+        onClick={handleShare}
+        className={`${className} ${shareStatus === 'success' ? 'success-animation' : ''} ${shareStatus === 'error' ? 'error-animation' : ''}`}
+        isLoading={isLoading || isProcessing}
+        disabled={isLoadingBestFriends}
+        data-principle-share
+        aria-label={shareStatus === 'success' ? 'Successfully shared' : shareStatus === 'error' ? 'Share failed, click to try again' : 'Share this content'}
+      >
+        {shareStatus === 'success' ? '✓ Shared!' : shareStatus === 'error' ? 'Try Again' : buttonText}
+      </Button>
+      {shareStatus === 'error' && (
+        <p className="text-xs text-red-400 mt-2 text-center" role="alert">
+          Share failed. Please try again.
+        </p>
+      )}
+    </div>
   );
 }

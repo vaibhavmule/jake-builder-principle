@@ -123,7 +123,7 @@ export function ActionsTab() {
 
   // --- Render ---
   return (
-    <div className="space-y-3 px-6 w-full max-w-md mx-auto">
+    <div className="space-y-3 px-6 w-full max-w-md mx-auto py-4">
       {/* Share functionality */}
       <ShareButton
         buttonText="Share Mini App"
@@ -144,24 +144,41 @@ export function ActionsTab() {
           actions.openUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
         }
         className="w-full"
+        aria-label="Open external link"
       >
         Open Link
       </Button>
 
-      <Button onClick={actions.addMiniApp} disabled={added} className="w-full">
-        Add Mini App to Client
+      <Button 
+        onClick={actions.addMiniApp} 
+        disabled={added} 
+        className="w-full"
+        aria-label={added ? "Mini app already added" : "Add mini app to client"}
+      >
+        {added ? '✓ Added to Client' : 'Add Mini App to Client'}
       </Button>
 
       {/* Notification functionality */}
       {notificationState.sendStatus && (
-        <div className="text-sm w-full">
-          Send notification result: {notificationState.sendStatus}
+        <div 
+          className={`text-sm w-full p-3 rounded-lg ${
+            notificationState.sendStatus === 'Success' 
+              ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+              : notificationState.sendStatus === 'Rate limited'
+              ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+              : 'bg-red-500/20 text-red-400 border border-red-500/30'
+          }`}
+          role="alert"
+          aria-live="polite"
+        >
+          Notification status: {notificationState.sendStatus}
         </div>
       )}
       <Button
         onClick={sendFarcasterNotification}
         disabled={!notificationDetails}
         className="w-full"
+        aria-label={!notificationDetails ? "Notification not available" : "Send notification to your Farcaster account"}
       >
         Send notification
       </Button>
@@ -171,23 +188,33 @@ export function ActionsTab() {
         onClick={copyUserShareUrl}
         disabled={!context?.user?.fid}
         className="w-full"
+        aria-label={notificationState.shareUrlCopied ? "Share URL copied to clipboard" : "Copy share URL to clipboard"}
       >
-        {notificationState.shareUrlCopied ? 'Copied!' : 'Copy share URL'}
+        {notificationState.shareUrlCopied ? '✓ Copied!' : 'Copy share URL'}
       </Button>
 
       {/* Haptic feedback controls */}
-      <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+      <div className="space-y-2 pt-4 border-t border-white/10">
+        <label 
+          htmlFor="haptic-intensity"
+          className="block text-sm font-medium text-white mb-2"
+        >
           Haptic Intensity
         </label>
         <select
+          id="haptic-intensity"
           value={selectedHapticIntensity}
           onChange={(e) =>
             setSelectedHapticIntensity(
               e.target.value as Haptics.ImpactOccurredType
             )
           }
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full px-3 py-2 min-h-[44px] rounded-md text-white placeholder:text-[var(--fid-color)] focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent touch-manipulation"
+          style={{
+            background: 'var(--glass-bg)',
+            border: '1px solid var(--glass-border)',
+          }}
+          aria-label="Select haptic feedback intensity"
         >
           <option value={'light'}>Light</option>
           <option value={'medium'}>Medium</option>
@@ -195,7 +222,11 @@ export function ActionsTab() {
           <option value={'soft'}>Soft</option>
           <option value={'rigid'}>Rigid</option>
         </select>
-        <Button onClick={triggerHapticFeedback} className="w-full">
+        <Button 
+          onClick={triggerHapticFeedback} 
+          className="w-full"
+          aria-label={`Trigger ${selectedHapticIntensity} haptic feedback`}
+        >
           Trigger Haptic Feedback
         </Button>
       </div>

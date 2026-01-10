@@ -23,13 +23,21 @@ export function ContextTab() {
   const { context } = useMiniApp();
   
   return (
-    <div className="mx-6">
-      <h2 className="text-lg font-semibold mb-2">Context</h2>
-      <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-        <pre className="font-mono text-xs whitespace-pre-wrap break-words w-full">
+    <div className="mx-6 py-4">
+      <h2 className="text-lg font-semibold mb-4 text-white">Context</h2>
+      <div 
+        className="p-4 rounded-lg glass-card overflow-auto max-h-[calc(100vh-200px)]"
+        role="region"
+        aria-label="Mini app context information"
+        tabIndex={0}
+      >
+        <pre className="font-mono text-xs whitespace-pre-wrap break-words w-full text-[var(--fid-color)] focus:outline-none focus:ring-2 focus:ring-white/50 rounded p-2">
           {JSON.stringify(context, null, 2)}
         </pre>
       </div>
+      <p className="text-xs text-[var(--fid-color)] mt-4">
+        Press Tab to focus and use arrow keys to scroll
+      </p>
     </div>
   );
 } 

@@ -5,6 +5,7 @@ import { ShareButton } from './Share';
 import { APP_URL } from '~/lib/constants';
 import { Share2, Heart } from 'lucide-react';
 import { TipButtonWithModal } from './wallet/TipButtonWithModal';
+import { useHaptics } from '~/hooks/useHaptics';
 
 interface PrincipleCardProps {
   principle: BuilderPrinciple;
@@ -13,6 +14,7 @@ interface PrincipleCardProps {
 }
 
 export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardProps) {
+  const { triggerSelection } = useHaptics();
   // Share link for this specific principle
   const shareUrl = `${APP_URL}/share/${principle.id}`;
 
@@ -34,8 +36,9 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
             href="https://farcaster.xyz/jake/0x23e58327"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap"
+            className="flex items-center gap-2 text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1 min-h-[44px] touch-manipulation"
             style={{ letterSpacing: '1.5px' }}
+            onClick={() => triggerSelection()}
           >
             <span>Builder Principles</span>
             <div
@@ -59,9 +62,10 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
             className="text-center text-white leading-relaxed"
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: '1.5rem',
+              fontSize: 'clamp(1.25rem, 4vw, 1.5rem)',
               fontWeight: 600,
-              textShadow: '0 0 5px rgba(255,255,255,0.1)'
+              textShadow: '0 0 5px rgba(255,255,255,0.1)',
+              lineHeight: '1.6'
             }}
           >
             {principle.text}
@@ -81,7 +85,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
               className="!bg-transparent"
             />
             <button
-              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none"
+              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none active:scale-95 min-h-[44px] min-w-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg px-2"
               style={{
                 fontFamily: "'Playfair Display', serif",
                 fontSize: '1.8rem',
@@ -90,9 +94,11 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
                 letterSpacing: '0px'
               }}
               onClick={() => {
+                triggerSelection();
                 const shareBtn = document.querySelector('[data-principle-share]') as HTMLButtonElement;
                 shareBtn?.click();
               }}
+              aria-label="Share this principle"
             >
               <Share2 className="w-6 h-6 transition-transform group-hover:rotate-12" />
               <span
@@ -115,7 +121,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
               className="!bg-transparent"
             />
             <button
-              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none"
+              className="group flex items-center gap-2 text-white transition-all duration-300 cursor-pointer bg-transparent border-none active:scale-95 min-h-[44px] min-w-[44px] touch-manipulation focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg px-2"
               style={{
                 fontFamily: "'Playfair Display', serif",
                 fontSize: '1.8rem',
@@ -124,9 +130,11 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
                 letterSpacing: '0px'
               }}
               onClick={() => {
+                triggerSelection();
                 const tipBtn = document.querySelector('[data-tip]') as HTMLButtonElement;
                 tipBtn?.click();
               }}
+              aria-label="Tip the creator"
             >
               <Heart className="w-6 h-6 transition-transform group-hover:scale-110" />
               <span

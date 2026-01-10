@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "../Button";
 import { TipModal } from "./TipModal";
+import { useHaptics } from "~/hooks/useHaptics";
 
 type TipButtonWithModalProps = {
   recipientFid?: number;
@@ -30,11 +31,15 @@ export function TipButtonWithModal({
   buttonText = "Tip",
 }: TipButtonWithModalProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { triggerSelection } = useHaptics();
 
   return (
     <>
       <Button
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          triggerSelection();
+          setIsModalOpen(true);
+        }}
         variant={variant}
         size={size}
         className={className}

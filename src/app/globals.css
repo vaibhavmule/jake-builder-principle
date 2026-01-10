@@ -30,10 +30,13 @@
   --background: #000000;
   --foreground: #ffffff;
   --bg-deep: #050505;
-  --glass-bg: rgba(255, 255, 255, 0.02);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-bg-hover: rgba(255, 255, 255, 0.05);
   --text-white: #ffffff;
   --fid-color: #a0a0a0;
+  --text-muted: #888888;
+  --contrast-ratio: 4.5; /* WCAG AA minimum */
 }
 
 body {
@@ -41,7 +44,12 @@ body {
   background: var(--background);
   background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000 100%);
   font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-size: 16px; /* Base font size for better mobile readability */
+  line-height: 1.6; /* Improved line height for readability */
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -89,9 +97,21 @@ body {
   
   .btn-primary {
     @apply text-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all duration-300;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    color: #ffffff;
+    font-weight: 500;
+  }
+  
+  .btn-primary:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+  
+  .btn-primary:active {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(0.97);
   }
   
   .btn-secondary {
@@ -116,9 +136,23 @@ body {
     @apply animate-spin rounded-full border-2 border-white border-t-transparent;
   }
 
-  /* Global focus styles */
+  /* Global focus styles - enhanced for accessibility */
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-white/70 focus:ring-offset-2 focus:ring-offset-transparent;
+  }
+  
+  /* Enhanced glassmorphic card with better visibility */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8), inset 0 0 1px rgba(255,255,255,0.1);
+  }
+  
+  .glass-card:hover {
+    background: var(--glass-bg-hover);
+    border-color: rgba(255, 255, 255, 0.15);
   }
 }
 
@@ -216,4 +250,127 @@ body {
   color: #ff00ff;
   animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
   text-shadow: -2px 0 #ff00ff;
+}
+
+/* Success/Error animations */
+@keyframes successPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Skeleton loading animation */
+@keyframes skeletonPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton {
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+.success-animation {
+  animation: successPulse 0.6s ease-in-out;
+}
+
+.error-animation {
+  animation: errorShake 0.5s ease-in-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.fade-out {
+  animation: fadeOut 0.3s ease-out;
+}
+
+/* Smooth entrance animation for cards */
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.card-entrance {
+  animation: cardEntrance 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Improved touch targets - minimum 44x44px */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+}
+
+/* Better typography scaling for mobile */
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --fid-color: #cccccc;
+  }
 }

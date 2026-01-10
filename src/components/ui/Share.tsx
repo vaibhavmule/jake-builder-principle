@@ -6,7 +6,6 @@ import { useMiniApp } from '@neynar/react';
 import { type ComposeCast } from "@farcaster/miniapp-sdk";
 import { APP_URL } from '~/lib/constants';
 import { useHaptics } from '~/hooks/useHaptics';
-import { Share2 } from 'lucide-react';
 
 interface EmbedConfig {
   path?: string;
@@ -123,29 +122,22 @@ export function ShareButton({ buttonText, cast, className = '', isLoading = fals
   const isSimple = className?.includes('bg-transparent') || className?.includes('flex items-center');
   
   if (isSimple) {
-    // Render as simple button for minimal styling
+    // Render as simple text link - no button styling, just plain text
     return (
       <button
         onClick={handleShare}
         disabled={isLoading || isProcessing || isLoadingBestFriends}
-        className={`${className} ${shareStatus === 'success' ? 'success-animation' : ''} ${shareStatus === 'error' ? 'error-animation' : ''} transition-opacity disabled:opacity-50 disabled:cursor-not-allowed`}
+        className="text-white text-base font-normal bg-transparent border-none shadow-none p-0 m-0 cursor-pointer hover:opacity-70 active:opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity min-h-[44px] touch-manipulation focus:outline-none"
         aria-label={shareStatus === 'success' ? 'Successfully shared' : shareStatus === 'error' ? 'Share failed, click to try again' : 'Share this content'}
       >
         {isLoading || isProcessing ? (
           <span className="opacity-70">...</span>
+        ) : shareStatus === 'success' ? (
+          '✓ shared'
+        ) : shareStatus === 'error' ? (
+          'try again'
         ) : (
-          <>
-            {shareStatus === 'success' ? (
-              '✓'
-            ) : shareStatus === 'error' ? (
-              '!'
-            ) : (
-              <>
-                <Share2 className="w-5 h-5" />
-                <span>{buttonText}</span>
-              </>
-            )}
-          </>
+          buttonText
         )}
       </button>
     );

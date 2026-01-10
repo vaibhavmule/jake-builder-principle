@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button } from "../Button";
 import { TipModal } from "./TipModal";
 import { useHaptics } from "~/hooks/useHaptics";
-import { Heart } from "lucide-react";
 
 type TipButtonWithModalProps = {
   recipientFid?: number;
@@ -44,11 +43,10 @@ export function TipButtonWithModal({
             triggerSelection();
             setIsModalOpen(true);
           }}
-          className={`${className} transition-opacity disabled:opacity-50 disabled:cursor-not-allowed`}
+          className="text-white text-base font-normal bg-transparent border-none shadow-none p-0 m-0 cursor-pointer hover:opacity-70 active:opacity-50 transition-opacity min-h-[44px] touch-manipulation focus:outline-none"
           aria-label={buttonText || 'Tip'}
         >
-          <Heart className="w-5 h-5" />
-          <span>{buttonText}</span>
+          {buttonText}
         </button>
       ) : (
         <Button

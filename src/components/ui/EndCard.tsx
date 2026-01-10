@@ -84,7 +84,7 @@ export function EndCard({ onRestart }: EndCardProps) {
           </a>
         </div>
 
-        {/* Footer - Simple Share and Tip buttons */}
+        {/* Footer - Simple text links */}
         <div className="flex justify-center items-center gap-8">
           <ShareButton
             buttonText="share"
@@ -92,13 +92,13 @@ export function EndCard({ onRestart }: EndCardProps) {
               text: "I just read all 44 Principles for Building in Crypto by @Jake\n\nView them all at:",
               embeds: [APP_URL],
             }}
-            className="flex items-center gap-2 text-white text-base bg-transparent border-none shadow-none hover:opacity-70 active:opacity-50 min-h-[44px] touch-manipulation focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2"
+            className="flex items-center bg-transparent border-none shadow-none"
           />
           <TipButtonWithModal
             recipientFid={1356870}
             recipientAddress="0xFFe16898FC0af80ee9BCF29D2B54a0F20F9498ad"
             buttonText="tip"
-            className="flex items-center gap-2 text-white text-base bg-transparent border-none shadow-none hover:opacity-70 active:opacity-50 min-h-[44px] touch-manipulation focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2"
+            className="flex items-center bg-transparent border-none shadow-none"
           />
         </div>
       </div>

@@ -19,7 +19,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
     <div className="flex items-center justify-center h-full w-full p-4">
       {/* Glassmorphic Card */}
       <div
-        className="relative w-full max-w-sm h-[80vh] max-h-[700px] flex flex-col justify-between p-10 rounded-[30px]"
+        className="relative w-full max-w-sm h-[80vh] max-h-[700px] flex flex-col justify-between p-6 md:p-10 rounded-[30px]"
         style={{
           background: 'var(--glass-bg)',
           backdropFilter: 'blur(20px)',
@@ -28,23 +28,23 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
         }}
       >
         {/* Header - Title and attribution on left, progress on right */}
-        <div className="flex items-center justify-between w-full gap-4 min-w-0">
+        <div className="flex items-start justify-between w-full gap-2 min-w-0 flex-wrap">
           <a
             href="https://farcaster.xyz/jake/0x23e58327"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1 touch-manipulation"
-            style={{ letterSpacing: '1.5px' }}
+            className="flex items-center gap-1.5 text-[10px] sm:text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-1 py-1 touch-manipulation min-w-0 flex-shrink flex-wrap"
+            style={{ letterSpacing: '1.2px' }}
           >
             <span>Principles for Building in Crypto</span>
             <div
-              className="w-4 h-4 rounded-full border border-white/20 flex-shrink-0"
+              className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border border-white/20 flex-shrink-0"
               style={{ backgroundColor: '#0000FF' }}
               aria-label="Jake"
             />
-            <span>@Jake</span>
+            <span className="flex-shrink-0">@Jake</span>
           </a>
-          <span className="text-xs text-[var(--fid-color)] tracking-wider whitespace-nowrap flex-shrink-0" style={{ letterSpacing: '1px' }}>
+          <span className="text-[10px] sm:text-xs text-[var(--fid-color)] tracking-wider whitespace-nowrap flex-shrink-0 ml-2" style={{ letterSpacing: '1px' }}>
             {currentIndex} / {total}
           </span>
         </div>

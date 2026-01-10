@@ -38,7 +38,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
             style={{ letterSpacing: '1.5px' }}
           >
             <img
-              src="https://i.imgur.com/yHXHMV3.jpg"
+              src="https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4e5db6c9-4d59-49a6-01ba-57b4bd402c00/original"
               alt="Jake"
               className="w-6 h-6 rounded-full border border-white/20"
             />

@@ -37,10 +37,10 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
             className="flex items-center gap-2 text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap"
             style={{ letterSpacing: '1.5px' }}
           >
-            <img
-              src="https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4e5db6c9-4d59-49a6-01ba-57b4bd402c00/original"
-              alt="Jake"
+            <div
               className="w-6 h-6 rounded-full border border-white/20"
+              style={{ backgroundColor: '#0000FF' }}
+              aria-label="Jake"
             />
             Builder Principles (@Jake)
           </a>

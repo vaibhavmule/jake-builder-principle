@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { principles } from '~/lib/principles';
 import { PrincipleCard } from './PrincipleCard';
+import { EndCard } from './EndCard';
 
 const SWIPE_THRESHOLD = 100; // pixels
 const VELOCITY_THRESHOLD = 0.5; // pixels/ms
@@ -39,7 +40,7 @@ export function SwipeableCards() {
   const handleNavigate = useCallback((direction: 'next' | 'prev') => {
     if (isAnimating) return;
 
-    if (direction === 'next' && currentIndex < principles.length - 1) {
+    if (direction === 'next' && currentIndex < principles.length) {
       setIsAnimating(true);
       setSwipeDirection('left');
 
@@ -90,7 +91,7 @@ export function SwipeableCards() {
 
     // Prevent swiping beyond boundaries
     if ((currentIndex === 0 && offset > 0) ||
-        (currentIndex === principles.length - 1 && offset < 0)) {
+        (currentIndex === principles.length && offset < 0)) {
       setSwipeOffset(offset * 0.2); // Reduced resistance at boundaries
     } else {
       setSwipeOffset(offset);
@@ -106,8 +107,8 @@ export function SwipeableCards() {
 
     // Check if swipe threshold is met
     if (distance > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD) {
-      if (swipeOffset < 0 && currentIndex < principles.length - 1) {
-        // Swipe left - next principle
+      if (swipeOffset < 0 && currentIndex < principles.length) {
+        // Swipe left - next principle (or end card)
         handleNavigate('next');
       } else if (swipeOffset > 0 && currentIndex > 0) {
         // Swipe right - previous principle
@@ -126,6 +127,17 @@ export function SwipeableCards() {
   };
 
   const currentPrinciple = principles[currentIndex];
+
+  const handleRestart = useCallback(() => {
+    setIsAnimating(true);
+    setSwipeDirection('right');
+
+    setTimeout(() => {
+      setCurrentIndex(0);
+      setSwipeDirection(null);
+      setIsAnimating(false);
+    }, 300);
+  }, []);
 
   const handleTapNavigation = (e: React.MouseEvent) => {
     if (isAnimating) return;
@@ -166,11 +178,15 @@ export function SwipeableCards() {
               swipeDirection === 'right' ? 'animate-[slideOutRight_300ms_ease-out]' : ''
             }`}
           >
-            <PrincipleCard
-              principle={currentPrinciple}
-              currentIndex={currentIndex + 1}
-              total={principles.length}
-            />
+            {currentIndex < principles.length ? (
+              <PrincipleCard
+                principle={currentPrinciple}
+                currentIndex={currentIndex + 1}
+                total={principles.length}
+              />
+            ) : (
+              <EndCard onRestart={handleRestart} />
+            )}
           </div>
         </div>
       </div>

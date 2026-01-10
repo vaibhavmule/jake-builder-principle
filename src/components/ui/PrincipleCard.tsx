@@ -27,29 +27,26 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
           boxShadow: '0 50px 100px -20px rgba(0,0,0,1)'
         }}
       >
-        {/* Header - Attribution link on left, progress on right */}
-        <div className="flex items-center justify-between flex-nowrap">
+        {/* Header - Title and attribution on left, progress on right */}
+        <div className="flex items-center justify-between w-full gap-4 min-w-0">
           <a
             href="https://farcaster.xyz/jake/0x23e58327"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1 min-h-[44px] touch-manipulation"
+            className="flex items-center gap-2 text-xs tracking-wider uppercase font-mono text-[var(--fid-color)] hover:text-white transition-colors duration-300 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1 touch-manipulation"
             style={{ letterSpacing: '1.5px' }}
           >
             <span>Principles for Building in Crypto</span>
             <div
-              className="w-4 h-4 rounded-full border border-white/20"
+              className="w-4 h-4 rounded-full border border-white/20 flex-shrink-0"
               style={{ backgroundColor: '#0000FF' }}
               aria-label="Jake"
             />
             <span>@Jake</span>
           </a>
-          <p
-            className="text-xs text-[var(--fid-color)] tracking-wider whitespace-nowrap ml-4"
-            style={{ letterSpacing: '1px' }}
-          >
+          <span className="text-xs text-[var(--fid-color)] tracking-wider whitespace-nowrap flex-shrink-0" style={{ letterSpacing: '1px' }}>
             {currentIndex} / {total}
-          </p>
+          </span>
         </div>
 
         {/* Center - Main principle text */}

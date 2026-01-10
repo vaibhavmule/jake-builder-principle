@@ -1,5 +1,5 @@
 /**
- * Builder Principles by Jake
+ * Principles for Building in Crypto by Jake
  * Source: https://farcaster.xyz/jake/0x23e58327
  */
 

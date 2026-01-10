@@ -1,4 +1,4 @@
-# Builder Principles - Roadmap
+# Principles for Building in Crypto - Roadmap
 
 ## Current Features ✅
 - Swipeable principle cards (44 principles from Jake)

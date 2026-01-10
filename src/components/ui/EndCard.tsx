@@ -93,7 +93,7 @@ export function EndCard({ onRestart }: EndCardProps) {
             <ShareButton
               buttonText=""
               cast={{
-                text: "I just read all 44 Builder Principles by @Jake\n\nView them all at:",
+                text: "I just read all 44 Principles for Building in Crypto by @Jake\n\nView them all at:",
                 embeds: [APP_URL],
               }}
               className="!bg-transparent"
@@ -168,7 +168,7 @@ export function EndCard({ onRestart }: EndCardProps) {
           <ShareButton
             buttonText=""
             cast={{
-              text: "I just read all 44 Builder Principles by @Jake\n\nView them all at:",
+              text: "I just read all 44 Principles for Building in Crypto by @Jake\n\nView them all at:",
               embeds: [APP_URL],
             }}
             className="!bg-transparent"

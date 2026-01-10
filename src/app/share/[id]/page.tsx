@@ -5,7 +5,7 @@ import { getMiniAppEmbedMetadata } from "~/lib/utils";
 import { principles } from "~/lib/principles";
 export const revalidate = 300;
 
-// Share page for individual builder principles
+// Share page for individual principles for building in crypto
 // Sharing this route e.g. example.com/share/1 will generate a share page for principle #1
 // with the principle text in the Open Graph metadata
 export async function generateMetadata({
@@ -21,8 +21,8 @@ export async function generateMetadata({
     ? `Principle #${principleId}: ${principle.text}`
     : `${APP_NAME}`;
   const description = principle
-    ? `"${principle.text}" - Builder Principles by Jake`
-    : "45 principles for building in crypto";
+    ? `"${principle.text}" - Principles for Building in Crypto by Jake`
+    : "44 principles for building in crypto";
 
   const imageUrl = `${APP_URL}/api/opengraph-image?principle=${principleId}`;
 

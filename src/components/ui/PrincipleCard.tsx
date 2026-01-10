@@ -40,7 +40,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
             style={{ letterSpacing: '1.5px' }}
             onClick={() => triggerSelection()}
           >
-            <span>Builder Principles</span>
+            <span>Principles for Building in Crypto</span>
             <div
               className="w-4 h-4 rounded-full border border-white/20"
               style={{ backgroundColor: '#0000FF' }}
@@ -79,7 +79,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
             <ShareButton
               buttonText=""
               cast={{
-                text: `"${principle.text}"\n\n#${principle.id} of 44 Builder Principles\n\nView all at:`,
+                text: `"${principle.text}"\n\n#${principle.id} of 44 Principles for Building in Crypto\n\nView all at:`,
                 embeds: [shareUrl],
               }}
               className="!bg-transparent"
@@ -154,7 +154,7 @@ export function PrincipleCard({ principle, currentIndex, total }: PrincipleCardP
           <ShareButton
             buttonText=""
             cast={{
-              text: `"${principle.text}"\n\n#${principle.id} of 44 Builder Principles\n\nView all at:`,
+              text: `"${principle.text}"\n\n#${principle.id} of 44 Principles for Building in Crypto\n\nView all at:`,
               embeds: [shareUrl],
             }}
             className="!bg-transparent"

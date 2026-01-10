@@ -129,7 +129,7 @@ export function TipModal({
 
           {/* Description */}
           <p className="text-center text-sm text-[var(--fid-color)]">
-            Support the development of Builder Principles! Your tips help maintain and improve the app.
+            Support the development of Principles for Building in Crypto! Your tips help maintain and improve the app.
           </p>
 
           {/* Predefined amounts */}

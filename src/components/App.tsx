@@ -79,7 +79,7 @@ export default function App() {
           </div>
           <div className="space-y-2">
             <p className="text-white text-lg font-medium">Loading...</p>
-            <p className="text-[var(--fid-color)] text-sm">Preparing Builder Principles</p>
+            <p className="text-[var(--fid-color)] text-sm">Preparing Principles for Building in Crypto</p>
           </div>
           {/* Skeleton card preview */}
           <div className="mt-8 mx-auto w-full max-w-sm h-[60vh] max-h-[500px] rounded-[30px] skeleton" 
@@ -111,7 +111,7 @@ export default function App() {
         minHeight: '100dvh',
       }}
       role="application"
-      aria-label="Builder Principles mini app"
+      aria-label="Principles for Building in Crypto mini app"
     >
       {/* Header and Footer hidden for fullscreen ultra-minimal experience */}
 

@@ -22,7 +22,7 @@ export const APP_URL: string = process.env.NEXT_PUBLIC_URL!;
  * The name of the mini app as displayed to users.
  * Used in titles, headers, and app store listings.
  */
-export const APP_NAME: string = 'Builder Principles — Jake (2026)';
+export const APP_NAME: string = 'Principles for Building in Crypto — Jake (2026)';
 
 /**
  * A brief description of the mini app's functionality.
